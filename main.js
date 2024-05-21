@@ -64,10 +64,15 @@ function initMap() {
 
 // Add marker functions for each MRT station
 function displayBuonaVistaInfo() {
+  fetch("http://127.0.0.1:3000", {
+    method: "GET",})
   clearFoodOptions();
   displayLocationNames(buonaVistaData, buonaVistaMRT);
   addMarkers(buonaVistaData, buonaVistaMRT);
 }
+
+
+
 function adisplayClementiInfo() {
   clearFoodOptions();
   displayLocationNames(clementiData, clementiMRT);
