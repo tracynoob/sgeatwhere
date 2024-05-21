@@ -64,16 +64,14 @@ function initMap() {
 
 // Add marker functions for each MRT station
 function displayBuonaVistaInfo() {
-  fetch("http://127.0.0.1:3000", {
+  fetch("https://automatic-tribble-r47p67v9wgg4fx7j7.github.dev:3000", {
     method: "GET",})
   clearFoodOptions();
   displayLocationNames(buonaVistaData, buonaVistaMRT);
   addMarkers(buonaVistaData, buonaVistaMRT);
 }
 
-
-
-function adisplayClementiInfo() {
+function displayClementiInfo() {
   clearFoodOptions();
   displayLocationNames(clementiData, clementiMRT);
   addMarkers(clementiData, clementiMRT);
