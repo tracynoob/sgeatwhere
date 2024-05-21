@@ -1,0 +1,172 @@
+/* Reset padding and margin for all elements */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* Use flexbox for the body to center the map */
+body {
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Style the search container to display inputs in a row */
+.mrt-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.green-line {
+  background-color: #4caf50; /* Green */
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.green-line:hover {
+  background-color: #45a049; /* Darker Green */
+}
+.circle-line {
+  background-color: #faab18; /* Orange */
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.circle-line:hover {
+  background-color: #e09915; /* Darker Orange */
+}
+
+/* Style Google map */
+#google-map {
+  border: 1px solid #ccc;
+  width: 700px;
+  height: 500px;
+  margin: 0 auto;
+}
+
+/* Style location cards container */
+.location-cards-container {
+  display: flex; /* Use flexbox */
+  flex-wrap: wrap; /* Allow wrapping of location cards */
+  justify-content: center; /* Center the location cards horizontally */
+  gap: 20px; /* Spacing between location cards */
+}
+
+/* Style location cards */
+.location-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  max-width: 300px;
+}
+
+.location-card-content {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.8;
+  color: #3c3633;
+}
+
+.location-card-content-small {
+  font-size: 0.9em; /* Adjust font size as needed */
+}
+
+.location-card-content-small h4 {
+  font-size: 1.1em; /* Adjust header size if needed */
+}
+
+.location-card-content-small p {
+  font-size: 0.9em; /* Adjust paragraph size if needed */
+}
+
+.location-image {
+  width: 300px;
+  border-radius: 20px;
+  height: auto;
+}
+
+.show-food-options-btn {
+  border: color #3c3633;
+  border-radius: 10px;
+  padding: 5px 5px;
+  display: inline-block;
+}
+
+.show-food-options-btn:hover {
+  background-color: #ccc;
+}
+
+/* Style food option cards */
+.food-options-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.food-option-card {
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  max-width: 300px;
+  line-height: 1.5;
+  background-color: #fff2e1;
+}
+
+/* Style food option card content */
+.food-option-card p {
+  font-size: smaller;
+}
+
+/* CSS for the clickable link to Google Maps */
+.view-map-link {
+  font-size: 0.9em;
+  color: #5ab2ff;
+  text-decoration: underline;
+}
+
+.view-map-link:hover {
+  color: #4285f4; /* Darker tone for hover */
+}
+
+/* location category */
+.location-category {
+  border-radius: 10px; /* Rounded border */
+  padding: 5px 10px; /* Padding for content */
+  display: inline-block; /* Display as inline block */
+  position: absolute; /* Position category absolutely */
+  bottom: 10px; /* Distance from the top of the card */
+  right: 10px; /* Distance from the right of the card */
+}
+
+/* location category by color */
+.shopping-mall {
+  background-color: #bed7dc; /* Background color for shopping mall */
+}
+.hawker-centre {
+  background-color: #f1eedc; /* Background color for hawker centre */
+}
+.hotel {
+  background-color: #f7ded0; /* Background color for hotel */
+}
+.business-center {
+  background-color: #e1acac; /* Background color for business center */
+}
+.info-window-content {
+  padding-bottom: 10px;
+  line-height: 1.5;
+}

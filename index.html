@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SG Eat Where?</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h2>Food nearby MRT stations</h2>
+    <div class="mrt-container">
+      <button class="green-line" onclick="displayBuonaVistaInfo()">
+        Buona Vista MRT
+      </button>
+      <button class="green-line" onclick="displayClementiInfo()">
+        Clementi MRT
+      </button>
+      <button class="green-line" onclick="displayQueenstownInfo()">
+        Queenstown MRT
+      </button>
+      <button class="circle-line" onclick="displayBrasBasahInfo()">
+        Bras Basah MRT
+      </button>
+    </div>
+    <div id="location-names"></div>
+    <div id="food-options" class="food-options-container"></div>
+    <div id="google-map"></div>
+    <script src="main.js"></script>
+    <script src="markerData.js"></script>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkoJecrZnsRn9jZrr2H65E-0pC3yumh30&loading=async&libraries=places&callback=initMap"
+    ></script>
+  </body>
+</html>
