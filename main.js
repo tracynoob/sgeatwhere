@@ -1,20 +1,3 @@
-// import { GOOGLE_MAPS_API_KEY } from "./config.js";
-
-// // import { supabase, supabaseUrl, supabaseKey } from "./supabase.js";
-// let apiKey = GOOGLE_MAPS_API_KEY;
-// // console.log(supabaseUrl);
-// import {
-//   buonaVistaData,
-//   clementiData,
-//   queenstownData,
-//   brasBasahData,
-// } from "./markerData.js";
-// import { clearFoodOptions, showFoodOptions } from "./foodOptions.js";
-
-// let map = new google.maps.Map(
-//   document.getElementById("google-map"),
-//   mapOptions
-// );
 var map;
 let markers = [];
 let newMarker;
@@ -30,18 +13,18 @@ const clementiMRT = { lat: 1.3157320708493883, lng: 103.7650341376623 };
 const queenstownMRT = { lat: 1.2949046236465185, lng: 103.80583738778117 };
 const brasBasahMRT = { lat: 1.2977384060268324, lng: 103.85050163878333 };
 
-// Function to get location data by its name
-function getLocationData(locationName) {
-  const allLocations = [].concat(
-    buonaVistaData,
-    clementiData,
-    queenstownData,
-    brasBasahData
-  );
-  return allLocations.find(
-    (location) => location.locationName === locationName
-  );
-}
+// *Removed after connecting to server.js and supabase*
+// function getLocationData(locationName) {
+//   const allLocations = [].concat(
+//     buonaVistaData,
+//     clementiData,
+//     queenstownData,
+//     brasBasahData
+//   );
+//   return allLocations.find(
+//     (location) => location.locationName === locationName
+//   );
+// }
 // Function to load the Google Maps API script
 
 // Initialize the Google Map
@@ -63,32 +46,90 @@ function initMap() {
 }
 
 // Add marker functions for each MRT station
-function displayBuonaVistaInfo() {
-  fetch("https://automatic-tribble-r47p67v9wgg4fx7j7.github.dev:3000", {
-    method: "GET",})
+async function BuonaVistaLocations() {
+  const response = await fetch("http://127.0.0.1:3000/getBuonaVistaLocations", {
+    method: "GET",
+  });
+  const data = await response.json();
+  const str_data = JSON.stringify(data);
+  const json = JSON.parse(str_data);
+  // console.log(typeof json.data);
+  // console.log(json.data);
   clearFoodOptions();
-  displayLocationNames(buonaVistaData, buonaVistaMRT);
-  addMarkers(buonaVistaData, buonaVistaMRT);
+  displayLocationNames(json.data, buonaVistaMRT);
+  addMarkers(json.data, buonaVistaMRT);
 }
 
-function displayClementiInfo() {
+async function ClementiLocations() {
+  const response = await fetch("http://127.0.0.1:3000/getClementiLocations", {
+    method: "GET",
+  });
+  const data = await response.json();
+  const str_data = JSON.stringify(data);
+  const json = JSON.parse(str_data);
+  // console.log(typeof json.data);
+  // console.log(json.data);
   clearFoodOptions();
-  displayLocationNames(clementiData, clementiMRT);
-  addMarkers(clementiData, clementiMRT);
+  displayLocationNames(json.data, clementiMRT);
+  addMarkers(json.data, clementiMRT);
 }
-function displayQueenstownInfo() {
+
+async function QueenstownLocations() {
+  const response = await fetch("http://127.0.0.1:3000/getQueenstownLocations", {
+    method: "GET",
+  });
+  const data = await response.json();
+  const str_data = JSON.stringify(data);
+  const json = JSON.parse(str_data);
+  // console.log(typeof json.data);
+  // console.log(json.data);
   clearFoodOptions();
-  displayLocationNames(queenstownData, queenstownMRT);
-  addMarkers(queenstownData, queenstownMRT);
+  displayLocationNames(json.data, queenstownMRT);
+  addMarkers(json.data, queenstownMRT);
 }
-function displayBrasBasahInfo() {
+
+async function BrasBasahLocations() {
+  const response = await fetch("http://127.0.0.1:3000/getBrasBasahLocations", {
+    method: "GET",
+  });
+  const data = await response.json();
+  const str_data = JSON.stringify(data);
+  const json = JSON.parse(str_data);
+  // console.log(typeof json.data);
+  // console.log(json.data);
   clearFoodOptions();
-  displayLocationNames(brasBasahData, brasBasahMRT);
-  addMarkers(brasBasahData, brasBasahMRT);
+  displayLocationNames(json.data, brasBasahMRT);
+  addMarkers(json.data, brasBasahMRT);
 }
+
+// *Removed after connecting to server.js and supabase*
+// async function displayBuonaVistaInfo() {
+//   const response = await fetch("http://127.0.0.1:3000/displayLocationNames", {
+//     method: "GET",
+//   });
+//   console.log(await response.json());
+//   clearFoodOptions();
+//   displayLocationNames(buonaVistaData, buonaVistaMRT);
+//   addMarkers(buonaVistaData, buonaVistaMRT);
+// }
+// function displayClementiInfo() {
+//   clearFoodOptions();
+//   displayLocationNames(clementiData, clementiMRT);
+//   addMarkers(clementiData, clementiMRT);
+// }
+// function displayQueenstownInfo() {
+//   clearFoodOptions();
+//   displayLocationNames(queenstownData, queenstownMRT);
+//   addMarkers(queenstownData, queenstownMRT);
+// }
+// function displayBrasBasahInfo() {
+//   clearFoodOptions();
+//   displayLocationNames(brasBasahData, brasBasahMRT);
+//   addMarkers(brasBasahData, brasBasahMRT);
+// }
 
 // Add markers to the map and display location information
-function addMarkers(markerData, mrtCoordinates) {
+function addMarkers(locationData, mrtCoordinates) {
   // Remove previous markers from the map
   clearMarkers();
   // Track the currently open info window
@@ -96,7 +137,7 @@ function addMarkers(markerData, mrtCoordinates) {
   const bounds = new google.maps.LatLngBounds();
 
   // Iterate over marker data
-  markerData.forEach((data) => {
+  locationData.forEach((data) => {
     const position = { lat: data.lat, lng: data.lng };
     const markerOptions = {
       position: position,
@@ -124,7 +165,7 @@ function addMarkers(markerData, mrtCoordinates) {
     // Create info window content based on marker data
     const content = `
     <div class="info-window-content" style="font-family: 'Montserrat', sans-serif; color: #3C3633">
-        <h4>${data.locationName}</h4>
+        <h4>${data.location_name}</h4>
         <p>${data.address}</p>
     </div>
 `;
@@ -153,7 +194,7 @@ function addMarkers(markerData, mrtCoordinates) {
 }
 
 // Display location names above Google Maps
-function displayLocationNames(markerData, mrtCoordinates) {
+function displayLocationNames(locationData, mrtCoordinates) {
   const locationNamesContainer = document.getElementById("location-names");
   locationNamesContainer.innerHTML = ""; // Clear previous location names
 
@@ -162,7 +203,7 @@ function displayLocationNames(markerData, mrtCoordinates) {
   locationCardsContainer.classList.add("location-cards-container");
 
   // Create a card for each location
-  markerData.forEach((data) => {
+  locationData.forEach((data) => {
     const card = document.createElement("div");
     card.classList.add("location-card");
 
@@ -177,17 +218,17 @@ function displayLocationNames(markerData, mrtCoordinates) {
     // Construct card content
     const content = `
       <div class="location-card-content location-card-content-small">
-      <img src="${data.image}" alt="${
-      data.locationName
+      <img src="${data.imgURL}" alt="${
+      data.location_name
     }" class="location-image">
-        <h4>${data.locationName}</h4>
+        <h4>${data.location_name}</h4>
         <p><strong>Address:</strong> ${data.address}</p>
         <p><strong>Distance from MRT:</strong> ${distance.toFixed(0)} metres</p>
         <button class="show-food-options-btn" data-location="${
-          data.locationName
+          data.location_name
         }">Show Food Options</button>
         <p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-          data.locationName
+          data.location_name
         )}" target="_blank" class="view-map-link">View on Google Maps</a></p>
         <p class="location-category ${getCategoryClass(data.category)}">${
       data.category
@@ -208,35 +249,75 @@ function displayLocationNames(markerData, mrtCoordinates) {
   locationNamesContainer.appendChild(locationCardsContainer);
 }
 
-// Function to display food options for a location
-function showFoodOptions(locationName) {
-  const locationData = getLocationData(locationName);
-  const foodOptionsDiv = document.getElementById("food-options");
-  if (locationData && locationData.foodOptions) {
-    // Clear previous food options
-    foodOptionsDiv.innerHTML = "";
-    // Create container for food options
-    const foodOptionsContainer = document.createElement("div");
-    foodOptionsContainer.classList.add("food-options-container");
-    // Create cards for each food option
-    locationData.foodOptions.forEach((option) => {
-      const card = document.createElement("div");
-      card.classList.add("food-option-card");
-      // Parse the food stall name, type of food stall, and type of cuisine
-      const [food_name, establishment_type, cuisine] = option.split(" - ");
-      card.innerHTML = `
-        <h4>${food_name}</h4>
-        <p><strong>Establishment Type:</strong> ${establishment_type}</p>
-        <p><strong>Cuisine:</strong> ${cuisine}</p>
-      `;
-      foodOptionsDiv.appendChild(card);
+// call server.js to display food options for a location
+async function showFoodOptions(location_name) {
+  let result = "";
+  const data = {
+    location: location_name,
+  };
+  try {
+    const request = await fetch("http://127.0.0.1:3000/getFoodOptions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
-  } else {
-    // If no food options available, display a message
-    foodOptionsDiv.innerHTML =
-      "<p>No food options available for " + locationName + "</p>";
+    result = await request.json();
+    console.log("Success:", result.data);
+  } catch (error) {
+    console.error("Error:", error);
   }
+  const foodOptionsDiv = document.getElementById("food-options");
+  // Clear previous food options
+  foodOptionsDiv.innerHTML = "";
+  // Create container for food options
+  const foodOptionsContainer = document.createElement("div");
+  foodOptionsContainer.classList.add("food-options-container");
+  // Create cards for each food option
+  result.data.forEach((foodOption) => {
+    const card = document.createElement("div");
+    card.classList.add("food-option-card");
+    // Parse the food stall name, type of food stall, and type of cuisine
+    card.innerHTML = `
+      <h4>${foodOption.food_name}</h4>
+      <p><strong>Establishment Type:</strong> ${foodOption.establishment_type}</p>
+      <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
+      <p><strong>Stall #:</strong> ${foodOption.stall_no}</p>
+    `;
+    foodOptionsDiv.appendChild(card);
+  });
 }
+
+// // Function to display food options for a location
+// function showFoodOption(locationName) {
+//   const locationData = getLocationData(locationName);
+//   const foodOptionsDiv = document.getElementById("food-options");
+//   if (locationData && locationData.foodOptions) {
+//     // Clear previous food options
+//     foodOptionsDiv.innerHTML = "";
+//     // Create container for food options
+//     const foodOptionsContainer = document.createElement("div");
+//     foodOptionsContainer.classList.add("food-options-container");
+//     // Create cards for each food option
+//     locationData.foodOptions.forEach((option) => {
+//       const card = document.createElement("div");
+//       card.classList.add("food-option-card");
+//       // Parse the food stall name, type of food stall, and type of cuisine
+//       const [food_name, establishment_type, cuisine] = option.split(" - ");
+//       card.innerHTML = `
+//         <h4>${food_name}</h4>
+//         <p><strong>Establishment Type:</strong> ${establishment_type}</p>
+//         <p><strong>Cuisine:</strong> ${cuisine}</p>
+//       `;
+//       foodOptionsDiv.appendChild(card);
+//     });
+//   } else {
+//     // If no food options available, display a message
+//     foodOptionsDiv.innerHTML =
+//       "<p>No food options available for " + locationName + "</p>";
+//   }
+// }
 // Function to clear food options
 function clearFoodOptions() {
   const foodOptionsDiv = document.getElementById("food-options");
@@ -256,11 +337,11 @@ function clearMarkers() {
 // Get CSS class based on category
 function getCategoryClass(category) {
   switch (category) {
-    case "Shopping Mall":
+    case "SHOPPING MALL":
       return "shopping-mall";
-    case "Hotel":
+    case "HOTEL":
       return "hotel";
-    case "Business Center":
+    case "BUSINESS CENTER":
       return "business-center";
     default:
       return "hawker-centre";
