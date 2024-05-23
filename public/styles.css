@@ -1,18 +1,7 @@
-/* Reset padding and margin for all elements */
-* {
-  padding: 0;
-  margin: 0;
-}
-
-/* Use flexbox for the body to center the map */
+/* body and .container styles already handled by Bootstrap */
 body {
   padding: 10px;
   font-family: "Montserrat", sans-serif;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 /* Style the search container to display inputs in a row */
@@ -58,10 +47,10 @@ body {
 
 /* Style location cards container */
 .location-cards-container {
-  display: flex; /* Use flexbox */
-  flex-wrap: wrap; /* Allow wrapping of location cards */
-  justify-content: center; /* Center the location cards horizontally */
-  gap: 20px; /* Spacing between location cards */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
 /* Style location cards */
@@ -73,41 +62,36 @@ body {
   margin-bottom: 10px;
   position: relative;
   max-width: 300px;
+  height: 500px;
 }
 
 .location-card-content {
   font-family: "Montserrat", sans-serif;
-  line-height: 1.8;
+  line-height: 1.5;
   color: #3c3633;
 }
 
 .location-card-content-small {
-  font-size: 0.9em; /* Adjust font size as needed */
-}
-
-.location-card-content-small h4 {
-  font-size: 1.1em; /* Adjust header size if needed */
-}
-
-.location-card-content-small p {
-  font-size: 0.9em; /* Adjust paragraph size if needed */
+  font-size: 0.9em;
 }
 
 .location-image {
-  width: 300px;
+  width: 280px;
   border-radius: 20px;
   height: auto;
 }
 
 .show-food-options-btn {
-  border: color #3c3633;
-  border-radius: 10px;
-  padding: 5px 5px;
-  display: inline-block;
+  color: white;
+  background-color: #387adf;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 10px;
 }
 
 .show-food-options-btn:hover {
-  background-color: #ccc;
+  background-color: #6c757d;
+  color: #fff;
 }
 
 /* Style food option cards */
@@ -123,7 +107,7 @@ body {
   padding: 10px;
   margin-bottom: 10px;
   max-width: 300px;
-  line-height: 1.5;
+  line-height: 1;
   background-color: #fff2e1;
 }
 
@@ -145,12 +129,13 @@ body {
 
 /* location category */
 .location-category {
-  border-radius: 10px; /* Rounded border */
-  padding: 5px 10px; /* Padding for content */
-  display: inline-block; /* Display as inline block */
-  position: absolute; /* Position category absolutely */
-  bottom: 10px; /* Distance from the top of the card */
-  right: 10px; /* Distance from the right of the card */
+  border-radius: 10px;
+  padding: 4px 8px;
+  display: inline-block;
+  position: absolute;
+  bottom: 1px;
+  right: 10px;
+  border: 1px solid #ccc;
 }
 
 /* location category by color */
@@ -169,4 +154,19 @@ body {
 .info-window-content {
   padding-bottom: 10px;
   line-height: 1.5;
+}
+
+.disclaimer {
+  background-color: #fbf9f1;
+  color: #555;
+  font-size: 0.8em;
+  padding: 10px;
+  border-radius: 10px;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.disclaimer p {
+  margin: 0;
 }

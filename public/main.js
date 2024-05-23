@@ -223,15 +223,19 @@ function displayLocationNames(locationData, mrtCoordinates) {
       data.location_name
     }" class="location-image">
         <p style="font-size: smaller; color: grey;">Source: ${data.img_source.toLowerCase()}</p>
-        <h4>${data.location_name}</h4>
-        <p><strong>Address:</strong> ${data.address}</p>
-        <p><strong>Distance from MRT:</strong> ${distance.toFixed(0)} metres</p>
+        <strong>${data.location_name}</strong>
+
+        <p>
+        <strong>Address:</strong> ${data.address} </br>
+        <strong>Distance from MRT:</strong> ${distance.toFixed(0)} metres </br>
+        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+          data.location_name
+        )}" target="_blank" class="view-map-link">View on Google Maps</a>
+        </p>
+
         <button class="show-food-options-btn" data-location="${
           data.location_name
-        }">Show Food Options</button>
-        <p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-          data.location_name
-        )}" target="_blank" class="view-map-link">View on Google Maps</a></p>
+        }">Show Food Options ＞ </button>
         <p class="location-category ${getCategoryClass(data.category)}">${
       data.category
     }</p>
@@ -282,10 +286,10 @@ async function showFoodOptions(location_name) {
     card.classList.add("food-option-card");
     // Parse the food stall name, type of food stall, and type of cuisine
     card.innerHTML = `
-      <h4>${foodOption.food_name}</h4>
+      <p"font-size: bigger;"><strong>${foodOption.food_name}</strong></p>
       <p><strong>Establishment Type:</strong> ${foodOption.establishment_type}</p>
       <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
-      <p><strong>Stall #:</strong> ${foodOption.stall_no}</p>
+      <p><strong>Stall No.:</strong> ${foodOption.stall_no}</p>
     `;
     foodOptionsDiv.appendChild(card);
   });
