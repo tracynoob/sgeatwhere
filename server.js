@@ -15,7 +15,7 @@ const port = 3000;
 
 app.use(cors()); // Use the cors middleware with your options
 
-const supabaseUrl = "https://ytwuhfytciwrngjtbqhh.supabase.co";
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
