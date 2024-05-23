@@ -98,9 +98,9 @@ app.post("/getFoodOptions", async (req, res) => {
   res.send({ data });
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
 
 // app.get("/displayLocationNames", (req, res) => {
 //   res.send({
