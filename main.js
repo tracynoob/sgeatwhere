@@ -47,9 +47,12 @@ function initMap() {
 
 // Add marker functions for each MRT station
 async function BuonaVistaLocations() {
-  const response = await fetch("http://127.0.0.1:3000/getBuonaVistaLocations", {
-    method: "GET",
-  });
+  const response = await fetch(
+    "https://sgeatwhere.onrender.com/getBuonaVistaLocations",
+    {
+      method: "GET",
+    }
+  );
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -61,9 +64,12 @@ async function BuonaVistaLocations() {
 }
 
 async function ClementiLocations() {
-  const response = await fetch("http://127.0.0.1:3000/getClementiLocations", {
-    method: "GET",
-  });
+  const response = await fetch(
+    "https://sgeatwhere.onrender.com/getClementiLocations",
+    {
+      method: "GET",
+    }
+  );
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -75,9 +81,12 @@ async function ClementiLocations() {
 }
 
 async function QueenstownLocations() {
-  const response = await fetch("http://127.0.0.1:3000/getQueenstownLocations", {
-    method: "GET",
-  });
+  const response = await fetch(
+    "https://sgeatwhere.onrender.com/getQueenstownLocations",
+    {
+      method: "GET",
+    }
+  );
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -89,9 +98,12 @@ async function QueenstownLocations() {
 }
 
 async function BrasBasahLocations() {
-  const response = await fetch("http://127.0.0.1:3000/getBrasBasahLocations", {
-    method: "GET",
-  });
+  const response = await fetch(
+    "hhttps://sgeatwhere.onrender.com/getBrasBasahLocations",
+    {
+      method: "GET",
+    }
+  );
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -256,13 +268,16 @@ async function showFoodOptions(location_name) {
     location: location_name,
   };
   try {
-    const request = await fetch("http://127.0.0.1:3000/getFoodOptions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const request = await fetch(
+      "https://sgeatwhere.onrender.com/getFoodOptions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     result = await request.json();
     console.log("Success:", result.data);
   } catch (error) {
