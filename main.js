@@ -99,7 +99,7 @@ async function QueenstownLocations() {
 
 async function BrasBasahLocations() {
   const response = await fetch(
-    "hhttps://sgeatwhere.onrender.com/getBrasBasahLocations",
+    "https://sgeatwhere.onrender.com/getBrasBasahLocations",
     {
       method: "GET",
     }
