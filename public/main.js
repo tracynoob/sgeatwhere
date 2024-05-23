@@ -2,7 +2,7 @@ var map;
 let markers = [];
 let newMarker;
 // const API_URL = "http://127.0.0.1:3000";
-const API_URL = "https://sgeatwhere.onrender.com:3000";
+const API_URL = "https://sgeatwhere.onrender.com";
 // let for newMarker:
 // let declares a block-scoped variable, which means it's only accessible within the block in which it's defined.
 // newMarker is intended to be used within the initMap and addMarker functions. Using let ensures that it's scoped to these functions and not accessible outside of them.

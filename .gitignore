@@ -1,4 +1,7 @@
+# Hidden files
 .DS_Store
 .env
-.markerData.js
 .vscode
+
+# Hide unused file
+markerData.js
