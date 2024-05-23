@@ -1,7 +1,8 @@
 var map;
 let markers = [];
 let newMarker;
-
+const API_URL = "http://127.0.0.1:3000";
+// const API_URL = "https://sgeatwhere.onrender.com:3000";
 // let for newMarker:
 // let declares a block-scoped variable, which means it's only accessible within the block in which it's defined.
 // newMarker is intended to be used within the initMap and addMarker functions. Using let ensures that it's scoped to these functions and not accessible outside of them.
@@ -47,12 +48,9 @@ function initMap() {
 
 // Add marker functions for each MRT station
 async function BuonaVistaLocations() {
-  const response = await fetch(
-    "https://sgeatwhere.onrender.com/getBuonaVistaLocations",
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(API_URL + "/getBuonaVistaLocations", {
+    method: "GET",
+  });
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -64,12 +62,9 @@ async function BuonaVistaLocations() {
 }
 
 async function ClementiLocations() {
-  const response = await fetch(
-    "https://sgeatwhere.onrender.com/getClementiLocations",
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(API_URL + "/getClementiLocations", {
+    method: "GET",
+  });
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -81,12 +76,9 @@ async function ClementiLocations() {
 }
 
 async function QueenstownLocations() {
-  const response = await fetch(
-    "https://sgeatwhere.onrender.com/getQueenstownLocations",
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(API_URL + "/getQueenstownLocations", {
+    method: "GET",
+  });
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -98,12 +90,9 @@ async function QueenstownLocations() {
 }
 
 async function BrasBasahLocations() {
-  const response = await fetch(
-    "https://sgeatwhere.onrender.com/getBrasBasahLocations",
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(API_URL + "/getBrasBasahLocations", {
+    method: "GET",
+  });
   const data = await response.json();
   const str_data = JSON.stringify(data);
   const json = JSON.parse(str_data);
@@ -230,9 +219,10 @@ function displayLocationNames(locationData, mrtCoordinates) {
     // Construct card content
     const content = `
       <div class="location-card-content location-card-content-small">
-      <img src="${data.imgURL}" alt="${
+        <img src="${data.imgURL}" alt="${
       data.location_name
     }" class="location-image">
+        <p style="font-size: smaller; color: grey;">Source: ${data.img_source.toLowerCase()}</p>
         <h4>${data.location_name}</h4>
         <p><strong>Address:</strong> ${data.address}</p>
         <p><strong>Distance from MRT:</strong> ${distance.toFixed(0)} metres</p>
@@ -268,16 +258,13 @@ async function showFoodOptions(location_name) {
     location: location_name,
   };
   try {
-    const request = await fetch(
-      "https://sgeatwhere.onrender.com/getFoodOptions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const request = await fetch(API_URL + "/getFoodOptions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
     result = await request.json();
     console.log("Success:", result.data);
   } catch (error) {

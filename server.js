@@ -5,7 +5,8 @@ const { createClient } = require("@supabase/supabase-js");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
+const path = require("path");
 
 // // Define the CORS options
 // const corsOptions = {
@@ -20,6 +21,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 app.use(express.json());
+app.use("/", express.static(path.join(__dirname, "public")));
 
 // call supabase Locations table
 app.get("/getBuonaVistaLocations", async (req, res) => {
@@ -98,9 +100,9 @@ app.post("/getFoodOptions", async (req, res) => {
   res.send({ data });
 });
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
-// });
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 // app.get("/displayLocationNames", (req, res) => {
 //   res.send({
