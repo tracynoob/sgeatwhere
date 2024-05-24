@@ -272,6 +272,25 @@ async function showFoodOptions(location_name) {
   // Create container for food options
   const foodOptionsContainer = document.createElement("div");
   foodOptionsContainer.classList.add("food-options-container");
+  // const filter = document.createElement("div");
+  // insert filter functionailty for js - ask chatgpt
+  // filter.innerHTML = `
+  // <label for="establishment-type-filter">Filter by Establishment Type:</label>
+  // <select id="establishment-type-filter">
+  //   <option value="ALL">All</option>
+  //   <option value="RESTAURANT">Restaurant</option>
+  //   <option value="HAWKER STALL">Hawker</option>
+  //   <option value="CAFE">Cafe</option>
+  //   <option value="BAR">Bar</option>
+  // </select>`;
+
+  // Add event listener for filter changes
+  // document
+  //   .getElementById("establishment-type-filter")
+  //   .addEventListener("change", filterFoodOptions);
+
+  // document.body.insertBefore(filter, document.body.firstChild);
+
   // Create cards for each food option
   result.data.forEach((foodOption) => {
     const card = document.createElement("div");
@@ -287,35 +306,39 @@ async function showFoodOptions(location_name) {
   });
 }
 
-// *Removed after connecting to server.js and supabase*
-// function showFoodOption(locationName) {
-//   const locationData = getLocationData(locationName);
-//   const foodOptionsDiv = document.getElementById("food-options");
-//   if (locationData && locationData.foodOptions) {
-//     // Clear previous food options
-//     foodOptionsDiv.innerHTML = "";
-//     // Create container for food options
-//     const foodOptionsContainer = document.createElement("div");
-//     foodOptionsContainer.classList.add("food-options-container");
-//     // Create cards for each food option
-//     locationData.foodOptions.forEach((option) => {
-//       const card = document.createElement("div");
-//       card.classList.add("food-option-card");
-//       // Parse the food stall name, type of food stall, and type of cuisine
-//       const [food_name, establishment_type, cuisine] = option.split(" - ");
-//       card.innerHTML = `
-//         <h4>${food_name}</h4>
-//         <p><strong>Establishment Type:</strong> ${establishment_type}</p>
-//         <p><strong>Cuisine:</strong> ${cuisine}</p>
-//       `;
-//       foodOptionsDiv.appendChild(card);
-//     });
-//   } else {
-//     // If no food options available, display a message
-//     foodOptionsDiv.innerHTML =
-//       "<p>No food options available for " + locationName + "</p>";
-//   }
+// New method to filter food options
+// function createCard(foodOption) {
+//   const card = document.createElement("div");
+//   card.classList.add("food-option-card");
+//   card.innerHTML = `
+//     <p style="font-size: bigger;"><strong>${foodOption.food_name}</strong></p>
+//     <p><strong>Establishment Type:</strong> ${foodOption.establishment_type}</p>
+//     <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
+//     <p><strong>Stall No.:</strong> ${foodOption.stall_no}</p>
+//   `;
+//   return card;
 // }
+
+// function displayFoodOptions(data) {
+//   foodOptionsDiv.innerHTML = ""; // Clear existing food options
+//   data.forEach((foodOption) => {
+//     foodOptionsDiv.appendChild(createCard(foodOption));
+//   });
+// }
+
+// function filterFoodOptions(result) {
+//   const filterValue = document.getElementById(
+//     "establishment-type-filter"
+//   ).value;
+//   const filteredData =
+//     filterValue === "ALL"
+//       ? result.data
+//       : result.data.filter(
+//           (foodOption) => foodOption.establishment_type === filterValue
+//         );
+//   displayFoodOptions(filteredData);
+// }
+
 // Function to clear food options
 function clearFoodOptions() {
   const foodOptionsDiv = document.getElementById("food-options");
