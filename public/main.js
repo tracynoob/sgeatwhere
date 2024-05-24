@@ -278,13 +278,15 @@ async function showFoodOptions(location_name) {
   const filter = document.getElementById("filter-list");
 
   const filterContent = `
-    <label for="establishment-type-filter">Filter by Establishment Type:</label>
-    <select id="establishment-type-filter">
-      <option value="ALL">All</option>
+    <label for="establishment-type-filter" class="filter-label">FILTERS</label>
+    <select id="establishment-type-filter" class="form-select">
+      <option value="ALL">All Types</option>
       <option value="RESTAURANT">Restaurant</option>
       <option value="HAWKER STALL">Hawker</option>
       <option value="CAFE">Cafe</option>
       <option value="BAR">Bar</option>
+      <option value="EATERY">Small Kiosk</option>
+      <option value="TAKEAWAY">Dabao</option>
     </select>
   `;
   filter.innerHTML = filterContent;
@@ -301,18 +303,26 @@ async function showFoodOptions(location_name) {
 // Create cards based on foodOption
 function createCard(foodOption) {
   const card = document.createElement("div");
-  card.classList.add("food-option-card");
+  card.classList.add("food-option-card", "mb-3");
   card.innerHTML = `
-  <p style="font-size: bigger;"><strong>${foodOption.food_name}</strong></br>
-    <span style="font-size: smaller; color: grey;;">${
-      "＠ " + foodOption.location_name.toLowerCase()
-    }</span>
-    </p>
-    <p><strong>Establishment Type:</strong> ${foodOption.establishment_type}</p>
-    <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
-    <p><strong>Stall No.:</strong> ${foodOption.stall_no}</p>
+
+  <div class="food-option-card-header">
+  <h6>${foodOption.food_name}</h6>
+  </div>
+
+  <div class="food-option-card-body">
+  <p><strong>Type:</strong> ${foodOption.establishment_type}</p>
+  <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
+  <p><strong>Stall No.:</strong> ${foodOption.stall_no}</p>
+  </div>
   `;
   return card;
+}
+
+{
+  /* <span style="font-size: smaller; color: grey;;">${
+  "＠ " + foodOption.location_name.toLowerCase()
+}</span> */
 }
 
 function displayFoodOptions(data) {
