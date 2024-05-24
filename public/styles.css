@@ -83,15 +83,15 @@ body {
 
 .show-food-options-btn {
   color: white;
-  background-color: #387adf;
+  background-color: #3ab0ff;
   border: none;
   border-radius: 20px;
   padding: 8px 10px;
 }
 
 .show-food-options-btn:hover {
-  background-color: #6c757d;
-  color: #fff;
+  background-color: #0a9cfd;
+  color: black;
 }
 
 /* Style food option cards */
@@ -129,30 +129,34 @@ body {
 
 /* location category */
 .location-category {
+  font-weight: 600;
   border-radius: 10px;
   padding: 4px 8px;
   display: inline-block;
   position: absolute;
   bottom: 1px;
   right: 10px;
-  border: 1px solid #ccc;
 }
 
 /* location category by color */
 .shopping-mall {
-  background-color: #bed7dc; /* Background color for shopping mall */
+  color: #d20062;
+  border: 1px solid #d20062;
 }
 .hawker-centre {
-  background-color: #f1eedc; /* Background color for hawker centre */
+  color: #5755fe;
+  border: 1px solid #5755fe;
 }
 .hotel {
-  background-color: #f7ded0; /* Background color for hotel */
+  color: #6cbbb3;
+  border: 1px solid #6cbbb3;
 }
-.business-center {
-  background-color: #e1acac; /* Background color for business center */
+.business-centre {
+  color: #647d87;
+  border: 1px solid #647d87;
 }
 .info-window-content {
-  padding-bottom: 10px;
+  font-weight: 400;
   line-height: 1.5;
 }
 

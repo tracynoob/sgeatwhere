@@ -39,14 +39,14 @@ function initMap() {
   // Code for custom marker
   newMarker = {
     url: "./images/foodmap.png", // URL to the custom marker image
-    scaledSize: new google.maps.Size(30, 30), // Scaled size of the icon (width, height)};
+    scaledSize: new google.maps.Size(35, 35), // Scaled size of the icon (width, height)};
   };
 
   // Initialize the map
   map = new google.maps.Map(document.getElementById("google-map"), mapOptions);
 }
 
-// Add marker functions for each MRT station
+// Add marker and display food locations for each MRT station
 async function BuonaVistaLocations() {
   const response = await fetch(API_URL + "/getBuonaVistaLocations", {
     method: "GET",
@@ -129,7 +129,7 @@ async function BrasBasahLocations() {
 //   addMarkers(brasBasahData, brasBasahMRT);
 // }
 
-// Add markers to the map and display location information
+// Add location markers to the map
 function addMarkers(locationData, mrtCoordinates) {
   // Remove previous markers from the map
   clearMarkers();
@@ -155,19 +155,11 @@ function addMarkers(locationData, mrtCoordinates) {
     // Store the marker in the markers array
     markers.push(marker);
 
-    // Code to calculate dist from MRT stations
-    const distance = calculateDistance(
-      mrtCoordinates.lat,
-      mrtCoordinates.lng,
-      data.lat,
-      data.lng
-    );
-
     // Create info window content based on marker data
     const content = `
     <div class="info-window-content" style="font-family: 'Montserrat', sans-serif; color: #3C3633">
-        <h4>${data.location_name}</h4>
-        <p>${data.address}</p>
+        <strong>${data.location_name}</strong>
+        <p style="font-size: smaller; color: grey;">${data.address}</p>
     </div>
 `;
 
@@ -194,7 +186,7 @@ function addMarkers(locationData, mrtCoordinates) {
   map.fitBounds(bounds);
 }
 
-// Display location names above Google Maps
+// Display location names
 function displayLocationNames(locationData, mrtCoordinates) {
   const locationNamesContainer = document.getElementById("location-names");
   locationNamesContainer.innerHTML = ""; // Clear previous location names
@@ -235,7 +227,7 @@ function displayLocationNames(locationData, mrtCoordinates) {
 
         <button class="show-food-options-btn" data-location="${
           data.location_name
-        }">Show Food Options ＞ </button>
+        }">Show Food Options >> </button>
         <p class="location-category ${getCategoryClass(data.category)}">${
       data.category
     }</p>
@@ -295,7 +287,7 @@ async function showFoodOptions(location_name) {
   });
 }
 
-// // Function to display food options for a location
+// *Removed after connecting to server.js and supabase*
 // function showFoodOption(locationName) {
 //   const locationData = getLocationData(locationName);
 //   const foodOptionsDiv = document.getElementById("food-options");
@@ -330,7 +322,7 @@ function clearFoodOptions() {
   foodOptionsDiv.innerHTML = "";
 }
 
-// Clear markers from the map
+// Function to clear markers from the map
 function clearMarkers() {
   // Iterate over the markers array and remove each marker from the map
   markers.forEach((marker) => {
@@ -347,8 +339,8 @@ function getCategoryClass(category) {
       return "shopping-mall";
     case "HOTEL":
       return "hotel";
-    case "BUSINESS CENTER":
-      return "business-center";
+    case "BUSINESS CENTRE":
+      return "business-centre";
     default:
       return "hawker-centre";
   }
