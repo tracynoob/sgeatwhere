@@ -274,8 +274,9 @@ async function showFoodOptions(location_name) {
   const foodOptionsContainer = document.createElement("div");
   foodOptionsContainer.classList.add("food-options-container");
 
-  // Create filter
-  const filter = document.getElementById("filter-list");
+  // Filter functionality
+  const filter = document.createElement("div");
+  filter.classList.add("filter-list");
 
   const filterContent = `
     <label for="establishment-type-filter">Filter by Establishment Type:</label>
@@ -288,6 +289,7 @@ async function showFoodOptions(location_name) {
     </select>
   `;
   filter.innerHTML = filterContent;
+  foodOptionsContainer.appendChild(filter);
 
   // Event listener for filter changes
   document
@@ -298,16 +300,22 @@ async function showFoodOptions(location_name) {
   displayFoodOptions(result.data);
 }
 
-// Create cards based on foodOption
+// Function to clear markers from the map
+function clearMarkers() {
+  // Iterate over the markers array and remove each marker from the map
+  markers.forEach((marker) => {
+    marker.setMap(null);
+  });
+  // Empty the markers array
+  markers = [];
+}
+
+// Helper methods
 function createCard(foodOption) {
   const card = document.createElement("div");
   card.classList.add("food-option-card");
   card.innerHTML = `
-  <p style="font-size: bigger;"><strong>${foodOption.food_name}</strong></br>
-    <span style="font-size: smaller; color: grey;;">${
-      "＠ " + foodOption.location_name.toLowerCase()
-    }</span>
-    </p>
+    <p style="font-size: bigger;"><strong>${foodOption.food_name}</strong></p>
     <p><strong>Establishment Type:</strong> ${foodOption.establishment_type}</p>
     <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
     <p><strong>Stall No.:</strong> ${foodOption.stall_no}</p>
@@ -334,22 +342,6 @@ function filterFoodOptions(result) {
           (foodOption) => foodOption.establishment_type === filterValue
         );
   displayFoodOptions(filteredData);
-}
-
-// Function to clear food options
-function clearFoodOptions() {
-  const foodOptionsDiv = document.getElementById("food-options");
-  foodOptionsDiv.innerHTML = "";
-}
-
-// Function to clear markers from the map
-function clearMarkers() {
-  // Iterate over the markers array and remove each marker from the map
-  markers.forEach((marker) => {
-    marker.setMap(null);
-  });
-  // Empty the markers array
-  markers = [];
 }
 
 // Get CSS class based on category
