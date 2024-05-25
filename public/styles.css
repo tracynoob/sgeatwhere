@@ -135,17 +135,24 @@ body {
 }
 
 /* Style filter */
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .filter-label {
-  display: inline-block;
   font-weight: bold;
   margin-right: 8px;
 }
 
-#establishment-type-filter {
-  display: inline-block;
+#establishment-type-filter,
+#cuisine-type-filter {
   text-align: center;
   width: 200px;
   margin-left: 8px;
+  margin-right: 16px;
+  border: 1px solid #ccc;
 }
 
 label {

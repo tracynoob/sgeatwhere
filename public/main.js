@@ -3,7 +3,7 @@ let markers = [];
 let newMarker;
 // const API_URL = "http://127.0.0.1:3000";
 const API_URL = "https://sgeatwhere.onrender.com";
-// let for newMarker:
+
 // let declares a block-scoped variable, which means it's only accessible within the block in which it's defined.
 // newMarker is intended to be used within the initMap and addMarker functions. Using let ensures that it's scoped to these functions and not accessible outside of them.
 // Additionally, using let instead of var allows for better code readability and maintainability, as it limits the scope of newMarker to where it's actually needed.
@@ -13,20 +13,6 @@ const buonaVistaMRT = { lat: 1.3074177591198148, lng: 103.78984059533414 };
 const clementiMRT = { lat: 1.3157320708493883, lng: 103.7650341376623 };
 const queenstownMRT = { lat: 1.2949046236465185, lng: 103.80583738778117 };
 const brasBasahMRT = { lat: 1.2977384060268324, lng: 103.85050163878333 };
-
-// *Removed after connecting to server.js and supabase*
-// function getLocationData(locationName) {
-//   const allLocations = [].concat(
-//     buonaVistaData,
-//     clementiData,
-//     queenstownData,
-//     brasBasahData
-//   );
-//   return allLocations.find(
-//     (location) => location.locationName === locationName
-//   );
-// }
-// Function to load the Google Maps API script
 
 // Initialize the Google Map
 function initMap() {
@@ -46,7 +32,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("google-map"), mapOptions);
 }
 
-// Add marker and display food locations for each MRT station
+// Call server.js to display food locations for each MRT station
 async function BuonaVistaLocations() {
   const response = await fetch(API_URL + "/getBuonaVistaLocations", {
     method: "GET",
@@ -102,32 +88,6 @@ async function BrasBasahLocations() {
   displayLocationNames(json.data, brasBasahMRT);
   addMarkers(json.data, brasBasahMRT);
 }
-
-// *Removed after connecting to server.js and supabase*
-// async function displayBuonaVistaInfo() {
-//   const response = await fetch("http://127.0.0.1:3000/displayLocationNames", {
-//     method: "GET",
-//   });
-//   console.log(await response.json());
-//   clearFoodOptions();
-//   displayLocationNames(buonaVistaData, buonaVistaMRT);
-//   addMarkers(buonaVistaData, buonaVistaMRT);
-// }
-// function displayClementiInfo() {
-//   clearFoodOptions();
-//   displayLocationNames(clementiData, clementiMRT);
-//   addMarkers(clementiData, clementiMRT);
-// }
-// function displayQueenstownInfo() {
-//   clearFoodOptions();
-//   displayLocationNames(queenstownData, queenstownMRT);
-//   addMarkers(queenstownData, queenstownMRT);
-// }
-// function displayBrasBasahInfo() {
-//   clearFoodOptions();
-//   displayLocationNames(brasBasahData, brasBasahMRT);
-//   addMarkers(brasBasahData, brasBasahMRT);
-// }
 
 // Add location markers to the map
 function addMarkers(locationData, mrtCoordinates) {
@@ -186,7 +146,7 @@ function addMarkers(locationData, mrtCoordinates) {
   map.fitBounds(bounds);
 }
 
-// Display location names
+// Display location names and content
 function displayLocationNames(locationData, mrtCoordinates) {
   const locationNamesContainer = document.getElementById("location-names");
   locationNamesContainer.innerHTML = ""; // Clear previous location names
@@ -267,18 +227,17 @@ async function showFoodOptions(location_name) {
   }
 
   const foodOptionsDiv = document.getElementById("food-options");
-  // Clear previous food options
-  foodOptionsDiv.innerHTML = "";
 
   // Create container for food options
   const foodOptionsContainer = document.createElement("div");
   foodOptionsContainer.classList.add("food-options-container");
 
   // Create filter
-  const filter = document.getElementById("filter-list");
+  const filter = document.getElementById("filter-list1");
 
   const filterContent = `
-    <label for="establishment-type-filter" class="filter-label">FILTERS</label>
+  <div id="filter-list" class="filter-container">  
+    <label for="establishment-type-filter" class="filter-label">Establishment Type</label>
     <select id="establishment-type-filter" class="form-select">
       <option value="ALL">All Types</option>
       <option value="RESTAURANT">Restaurant</option>
@@ -288,12 +247,27 @@ async function showFoodOptions(location_name) {
       <option value="EATERY">Small Kiosk</option>
       <option value="TAKEAWAY">Dabao</option>
     </select>
+
+    <label for="cuisine-type-filter" class="filter-label">Cuisine</label>
+    <select id="cuisine-type-filter" class="form-select">
+      <option value="ALL">All Cuisines</option>
+      <option value="WESTERN">Western</option>
+      <option value="JAPANESE">Japanese</option>
+      <option value="CHINESE">Chinese</option>
+      <option value="FAST FOOD">Fast Food</option>
+      <option value="HALAL">Halal</option>
+      <option value="DESSERT">Dessert</option>
+    </select>
+  </div>
   `;
   filter.innerHTML = filterContent;
 
   // Event listener for filter changes
   document
     .getElementById("establishment-type-filter")
+    .addEventListener("change", () => filterFoodOptions(result));
+  document
+    .getElementById("cuisine-type-filter")
     .addEventListener("change", () => filterFoodOptions(result));
 
   // Create and display cards for each food option
@@ -319,12 +293,6 @@ function createCard(foodOption) {
   return card;
 }
 
-{
-  /* <span style="font-size: smaller; color: grey;;">${
-  "＠ " + foodOption.location_name.toLowerCase()
-}</span> */
-}
-
 function displayFoodOptions(data) {
   const foodOptionsDiv = document.getElementById("food-options");
   foodOptionsDiv.innerHTML = ""; // Clear existing food options
@@ -334,15 +302,20 @@ function displayFoodOptions(data) {
 }
 
 function filterFoodOptions(result) {
-  const filterValue = document.getElementById(
+  const establishmentFilterValue = document.getElementById(
     "establishment-type-filter"
   ).value;
-  const filteredData =
-    filterValue === "ALL"
-      ? result.data
-      : result.data.filter(
-          (foodOption) => foodOption.establishment_type === filterValue
-        );
+  const cuisineFilterValue = document.getElementById(
+    "cuisine-type-filter"
+  ).value;
+  const filteredData = result.data.filter((foodOption) => {
+    const matchesEstablishment =
+      establishmentFilterValue === "ALL" ||
+      foodOption.establishment_type === establishmentFilterValue;
+    const matchesCuisine =
+      cuisineFilterValue === "ALL" || foodOption.cuisine === cuisineFilterValue;
+    return matchesEstablishment && matchesCuisine;
+  });
   displayFoodOptions(filteredData);
 }
 
