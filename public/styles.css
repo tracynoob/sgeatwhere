@@ -4,14 +4,38 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+/* Apply styles to the <header> element */
+header {
+  background-color: #6199ad;
+  color: #fefbf6;
+  padding: 15px;
+  text-align: center;
+}
+
+/* Style the heading inside the header */
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+/* Style the paragraph inside the header */
+header p {
+  font-size: 1.5rem;
+}
+
+header img {
+  max-width: 200px;
+  height: auto;
+}
+
 /* Style the search container to display inputs in a row */
-.mrt-container {
+/* .mrt-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
-}
+} */
 .green-line {
   background-color: #4caf50; /* Green */
   color: white;
@@ -112,30 +136,12 @@ body {
   border: 0.8px solid #647d87;
 }
 
-/* location category by color */
-/* .shopping-mall {
-  color: #4793af;
-  border: 1px solid #4793af;
-}
-.hawker-centre {
-  color: #e38c0a;
-  border: 1px solid #e38c0a;
-}
-.hotel {
-  color: #a87c7c;
-  border: 1px solid #a87c7c;
-}
-.business-centre {
-  color: #647d87;
-  border: 1px solid #647d87;
-} */
-
 .show-food-options-btn {
   color: white;
   background-color: #dc7264;
   border: none;
   border-radius: 20px;
-  padding: 6px 6px;
+  padding: 6px 10px;
   margin-bottom: 15px;
 }
 
@@ -170,6 +176,21 @@ label {
   margin-right: 8px;
 }
 
+/* Style random-food button */
+.random-food-btn {
+  color: white;
+  background-color: #dc7264;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.random-food-btn:hover {
+  background-color: #b0584e;
+  color: black;
+}
+
 /* Style food option cards */
 .food-options-container {
   display: flex;
@@ -189,7 +210,7 @@ label {
 
 .food-option-card-header {
   color: #fefbf6;
-  background-color: #6a9c89;
+  background-color: #6199ad;
   padding: 8px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

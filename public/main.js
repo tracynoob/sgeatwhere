@@ -235,15 +235,15 @@ async function showFoodOptions(location_name) {
   foodOptionsContainer.classList.add("food-options-container");
 
   // Create filter
-  const filter = document.getElementById("filter-list1");
+  const filter = document.getElementById("filter-list");
 
   const filterContent = `
-  <div id="filter-list" class="filter-container">  
+  <id="filter-list" class="filter-container">  
     <label for="establishment-type-filter" class="filter-label">Establishment Type</label>
     <select id="establishment-type-filter" class="form-select">
       <option value="ALL">All Types</option>
       <option value="RESTAURANT">Restaurant</option>
-      <option value="HAWKER STALL">Hawker</option>
+      <option value="EATERY">Eatery</option>
       <option value="CAFE">Cafe</option>
       <option value="BAR">Bar</option>
       <option value="EATERY">Small Kiosk</option>
@@ -270,11 +270,13 @@ async function showFoodOptions(location_name) {
       <option value="TAIWANESE">Taiwanese</option>
       <option value="VEGETARIAN">Vegetarian</option>
       <option value="BUBBLE TEA">Bubble Tea</option>
-      <option value="JUICE">Juice</option>
+      <option value="DRINK">Drink</option>
       <option value="DESSERT">Dessert</option>
       <option value="BAKERY">Bakery</option>      
-      <option value="DESSERT">Dessert</option>
+      <option value="PASTRIES & SNACKS">Pastries & Snacks</option>
     </select>
+
+    <button id="random-food-btn" class="random-food-btn">Randomly Suggest >></button>
   </div>
   `;
   filter.innerHTML = filterContent;
@@ -286,6 +288,11 @@ async function showFoodOptions(location_name) {
   document
     .getElementById("cuisine-type-filter")
     .addEventListener("change", () => filterFoodOptions(result));
+
+  // Event listener for the Random Food Option button
+  document.getElementById("random-food-btn").addEventListener("click", () => {
+    getRandomFoodOption(result);
+  });
 
   // Create and display cards for each food option
   displayFoodOptions(result.data);
@@ -341,6 +348,30 @@ function filterFoodOptions(result) {
   });
 
   displayFoodOptions(filteredData);
+}
+
+// Function to randomly select a food option based on the selected or "ALL" cuisine type
+function getRandomFoodOption(result) {
+  // Consider all cuisine types
+  const filteredData = result.data;
+
+  // Randomly select a food option from the filtered data
+  if (filteredData.length > 0) {
+    const randomIndex = Math.floor(Math.random() * filteredData.length);
+    const randomFoodOption = filteredData[randomIndex];
+    displayRandomFoodOption(randomFoodOption);
+  } else {
+    alert("No food options available.");
+  }
+}
+
+// Function to display the randomly selected food option
+function displayRandomFoodOption(foodOption) {
+  const foodOptionsDiv = document.getElementById("food-options");
+  foodOptionsDiv.innerHTML = ""; // Clear existing food options
+
+  const card = createCard(foodOption);
+  foodOptionsDiv.appendChild(card);
 }
 
 // Function to clear food options
