@@ -62,7 +62,7 @@ body {
   margin-bottom: 10px;
   position: relative;
   max-width: 300px;
-  height: 500px;
+  height: 460px;
 }
 
 .location-card-content {
@@ -81,19 +81,6 @@ body {
   height: auto;
 }
 
-.show-food-options-btn {
-  color: white;
-  background-color: #3ab0ff;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 10px;
-}
-
-.show-food-options-btn:hover {
-  background-color: #0a9cfd;
-  color: black;
-}
-
 /* CSS for the clickable link to Google Maps */
 .view-map-link {
   font-size: 0.9em;
@@ -105,33 +92,56 @@ body {
   color: #4285f4; /* Darker tone for hover */
 }
 
-/* location category */
-.location-category {
-  font-weight: 600;
-  border-radius: 10px;
-  padding: 4px 8px;
-  display: inline-block;
+/* Bottom content */
+.bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: absolute;
-  bottom: 1px;
+  bottom: 10px;
+  left: 10px;
   right: 10px;
 }
 
+/* location category */
+.location-category {
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 4px 4px;
+  display: inline-block;
+  border: 0.8px solid #647d87;
+}
+
 /* location category by color */
-.shopping-mall {
-  color: #d20062;
-  border: 1px solid #d20062;
+/* .shopping-mall {
+  color: #4793af;
+  border: 1px solid #4793af;
 }
 .hawker-centre {
-  color: #5755fe;
-  border: 1px solid #5755fe;
+  color: #e38c0a;
+  border: 1px solid #e38c0a;
 }
 .hotel {
-  color: #6cbbb3;
-  border: 1px solid #6cbbb3;
+  color: #a87c7c;
+  border: 1px solid #a87c7c;
 }
 .business-centre {
   color: #647d87;
   border: 1px solid #647d87;
+} */
+
+.show-food-options-btn {
+  color: white;
+  background-color: #dc7264;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 6px;
+  margin-bottom: 15px;
+}
+
+.show-food-options-btn:hover {
+  background-color: #b0584e;
+  color: black;
 }
 
 /* Style filter */

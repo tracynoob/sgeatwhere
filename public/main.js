@@ -185,12 +185,14 @@ function displayLocationNames(locationData, mrtCoordinates) {
         )}" target="_blank" class="view-map-link">View on Google Maps</a>
         </p>
 
-        <button class="show-food-options-btn" data-location="${
-          data.location_name
-        }">Show Food Options >> </button>
+        <div class="bottom-content">
         <p class="location-category ${getCategoryClass(data.category)}">${
       data.category
     }</p>
+    <button class="show-food-options-btn" data-location="${
+      data.location_name
+    }">More Food >> </button>
+      </div>
       </div>
     `;
 
@@ -251,11 +253,26 @@ async function showFoodOptions(location_name) {
     <label for="cuisine-type-filter" class="filter-label">Cuisine</label>
     <select id="cuisine-type-filter" class="form-select">
       <option value="ALL">All Cuisines</option>
+      <option value="CHINESE">Chinese</option>
+      <option value="HALAL">Halal</option>
+      <option value="INDIAN">Indian</option>
+      <option value="LOCAL">Local</option>
+      <option value="NYONYA">Nyonya</option>
+      <option value="FAST FOOD">Fast Food</option>
+      <option value="SALAD">Salad</option>
       <option value="WESTERN">Western</option>
       <option value="JAPANESE">Japanese</option>
-      <option value="CHINESE">Chinese</option>
-      <option value="FAST FOOD">Fast Food</option>
-      <option value="HALAL">Halal</option>
+      <option value="KOREAN">Korean</option>
+      <option value="VIETNAMESE">Vietnamese</option>
+      <option value="THAI">Thai</option>
+      <option value="MEXICAN">Mexican</option>
+      <option value="PORTUGESE">Portugese</option>
+      <option value="TAIWANESE">Taiwanese</option>
+      <option value="VEGETARIAN">Vegetarian</option>
+      <option value="BUBBLE TEA">Bubble Tea</option>
+      <option value="JUICE">Juice</option>
+      <option value="DESSERT">Dessert</option>
+      <option value="BAKERY">Bakery</option>      
       <option value="DESSERT">Dessert</option>
     </select>
   </div>
@@ -308,14 +325,21 @@ function filterFoodOptions(result) {
   const cuisineFilterValue = document.getElementById(
     "cuisine-type-filter"
   ).value;
+
   const filteredData = result.data.filter((foodOption) => {
     const matchesEstablishment =
       establishmentFilterValue === "ALL" ||
       foodOption.establishment_type === establishmentFilterValue;
+
+    const cuisineTypes = foodOption.cuisine
+      .split(",")
+      .map((cuisine) => cuisine.trim());
     const matchesCuisine =
-      cuisineFilterValue === "ALL" || foodOption.cuisine === cuisineFilterValue;
+      cuisineFilterValue === "ALL" || cuisineTypes.includes(cuisineFilterValue);
+
     return matchesEstablishment && matchesCuisine;
   });
+
   displayFoodOptions(filteredData);
 }
 
