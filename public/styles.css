@@ -28,14 +28,6 @@ header img {
   height: auto;
 }
 
-/* Style the search container to display inputs in a row */
-/* .mrt-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-} */
 .green-line {
   background-color: #4caf50; /* Green */
   color: white;
@@ -184,6 +176,7 @@ label {
   border-radius: 20px;
   padding: 8px 10px;
   cursor: pointer;
+  max-width: 280px;
 }
 
 .random-food-btn:hover {

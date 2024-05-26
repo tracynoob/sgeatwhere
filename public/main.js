@@ -202,6 +202,10 @@ function displayLocationNames(locationData, mrtCoordinates) {
     const showFoodOptionsBtn = card.querySelector(".show-food-options-btn");
     showFoodOptionsBtn.addEventListener("click", function () {
       showFoodOptions(this.getAttribute("data-location"));
+      // Scroll to the establishment-type-filter element
+      document.getElementById("filter-list").scrollIntoView({
+        behavior: "smooth",
+      });
     });
     locationCardsContainer.appendChild(card);
   });
@@ -238,18 +242,20 @@ async function showFoodOptions(location_name) {
   const filter = document.getElementById("filter-list");
 
   const filterContent = `
-  <id="filter-list" class="filter-container">  
+  <div id="filter-list" class="col-12 col-md-6 col-lg-3 mb-2">  
     <label for="establishment-type-filter" class="filter-label">Establishment Type</label>
     <select id="establishment-type-filter" class="form-select">
       <option value="ALL">All Types</option>
       <option value="RESTAURANT">Restaurant</option>
-      <option value="EATERY">Eatery</option>
+      <option value="HAWKER STALL">Hawker</option>
       <option value="CAFE">Cafe</option>
       <option value="BAR">Bar</option>
-      <option value="EATERY">Small Kiosk</option>
-      <option value="TAKEAWAY">Dabao</option>
+      <option value="EATERY">Eatery</option>
+      <option value="TAKEAWAY">Takeaway</option>
     </select>
+    </div>
 
+    <div class="col-12 col-md-6 col-lg-3 mb-2">
     <label for="cuisine-type-filter" class="filter-label">Cuisine</label>
     <select id="cuisine-type-filter" class="form-select">
       <option value="ALL">All Cuisines</option>
@@ -263,20 +269,18 @@ async function showFoodOptions(location_name) {
       <option value="WESTERN">Western</option>
       <option value="JAPANESE">Japanese</option>
       <option value="KOREAN">Korean</option>
-      <option value="VIETNAMESE">Vietnamese</option>
-      <option value="THAI">Thai</option>
-      <option value="MEXICAN">Mexican</option>
-      <option value="PORTUGESE">Portugese</option>
-      <option value="TAIWANESE">Taiwanese</option>
       <option value="VEGETARIAN">Vegetarian</option>
-      <option value="BUBBLE TEA">Bubble Tea</option>
+      <option value="OTHERS">Others</option>
       <option value="DRINK">Drink</option>
       <option value="DESSERT">Dessert</option>
       <option value="BAKERY">Bakery</option>      
       <option value="PASTRIES & SNACKS">Pastries & Snacks</option>
     </select>
+    </div>
 
-    <button id="random-food-btn" class="random-food-btn">Randomly Suggest >></button>
+    <div class="col-12 col-md-6 col-lg-3 mb-2">
+    <label for="random-food-btn">Can't Decide</label>
+    <button id="random-food-btn" class="random-food-btn btn-primary w-100">Randomly Suggest >></button>
   </div>
   `;
   filter.innerHTML = filterContent;
