@@ -151,6 +151,11 @@ function displayLocationNames(locationData, mrtCoordinates) {
   const locationNamesContainer = document.getElementById("location-names");
   locationNamesContainer.innerHTML = ""; // Clear previous location names
 
+  // Create text to be displayed above the location names
+  const locationText = document.getElementById("location-text");
+  locationText.innerHTML =
+    '<p>Click <span class="show-food-options-text"> More Food >> </span>  for food options in each location </p>';
+
   // Create a flex container for location cards
   const locationCardsContainer = document.createElement("div");
   locationCardsContainer.classList.add("location-cards-container");
@@ -202,13 +207,14 @@ function displayLocationNames(locationData, mrtCoordinates) {
     const showFoodOptionsBtn = card.querySelector(".show-food-options-btn");
     showFoodOptionsBtn.addEventListener("click", function () {
       showFoodOptions(this.getAttribute("data-location"));
-      // Scroll to the establishment-type-filter element
-      document.getElementById("filter-list").scrollIntoView({
+      // Scroll to the filter section
+      document.getElementById("filter-text").scrollIntoView({
         behavior: "smooth",
       });
     });
     locationCardsContainer.appendChild(card);
   });
+
   // Append the location cards container to the main container
   locationNamesContainer.appendChild(locationCardsContainer);
 }
@@ -302,7 +308,7 @@ async function showFoodOptions(location_name) {
   displayFoodOptions(result.data);
 }
 
-// Create cards based on foodOption
+// Create cards based on show-food-option button
 function createCard(foodOption) {
   const card = document.createElement("div");
   card.classList.add("food-option-card", "mb-3");
