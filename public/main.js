@@ -266,7 +266,6 @@ async function showFoodOptions(location_name) {
       <option value="HALAL">Halal</option>
       <option value="INDIAN">Indian</option>
       <option value="LOCAL">Local</option>
-      <option value="NYONYA">Nyonya</option>
       <option value="FAST FOOD">Fast Food</option>
       <option value="SALAD">Salad</option>
       <option value="WESTERN">Western</option>
