@@ -6,7 +6,6 @@ const API_URL = "https://sgeatwhere.onrender.com";
 
 // let declares a block-scoped variable, which means it's only accessible within the block in which it's defined.
 // newMarker is intended to be used within the initMap and addMarker functions. Using let ensures that it's scoped to these functions and not accessible outside of them.
-// Additionally, using let instead of var allows for better code readability and maintainability, as it limits the scope of newMarker to where it's actually needed.
 
 //  Coordinates for MRT stations
 const buonaVistaMRT = { lat: 1.3074177591198148, lng: 103.78984059533414 };
@@ -37,60 +36,56 @@ async function BuonaVistaLocations() {
   const response = await fetch(API_URL + "/getBuonaVistaLocations", {
     method: "GET",
   });
-  const data = await response.json();
-  const str_data = JSON.stringify(data);
-  const json = JSON.parse(str_data);
-  // console.log(typeof json.data);
-  // console.log(json.data);
+  const locationData = await response.json(); // returns parsed JSON object
+  // console.log(typeof locationData.data);
+  // console.log(locationData.data);
   clearFoodOptions();
-  displayLocationNames(json.data, buonaVistaMRT);
-  addMarkers(json.data, buonaVistaMRT);
+  clearFilterOptions();
+  displayLocationNames(locationData.data, buonaVistaMRT);
+  addMarkers(locationData.data, buonaVistaMRT);
 }
 
 async function ClementiLocations() {
   const response = await fetch(API_URL + "/getClementiLocations", {
     method: "GET",
   });
-  const data = await response.json();
-  const str_data = JSON.stringify(data);
-  const json = JSON.parse(str_data);
-  // console.log(typeof json.data);
-  // console.log(json.data);
+  const locationData = await response.json();
+  // console.log(typeof locationData.data);
+  // console.log(locationData.data);
   clearFoodOptions();
-  displayLocationNames(json.data, clementiMRT);
-  addMarkers(json.data, clementiMRT);
+  clearFilterOptions();
+  displayLocationNames(locationData.data, clementiMRT);
+  addMarkers(locationData.data, clementiMRT);
 }
 
 async function QueenstownLocations() {
   const response = await fetch(API_URL + "/getQueenstownLocations", {
     method: "GET",
   });
-  const data = await response.json();
-  const str_data = JSON.stringify(data);
-  const json = JSON.parse(str_data);
-  // console.log(typeof json.data);
-  // console.log(json.data);
+  const locationData = await response.json();
+  // console.log(typeof locationData.data);
+  // console.log(locationData.data);
   clearFoodOptions();
-  displayLocationNames(json.data, queenstownMRT);
-  addMarkers(json.data, queenstownMRT);
+  clearFilterOptions();
+  displayLocationNames(locationData.data, queenstownMRT);
+  addMarkers(locationData.data, queenstownMRT);
 }
 
 async function BrasBasahLocations() {
   const response = await fetch(API_URL + "/getBrasBasahLocations", {
     method: "GET",
   });
-  const data = await response.json();
-  const str_data = JSON.stringify(data);
-  const json = JSON.parse(str_data);
-  // console.log(typeof json.data);
-  // console.log(json.data);
+  const locationData = await response.json();
+  // console.log(typeof locationData.data);
+  // console.log(locationData.data);
   clearFoodOptions();
-  displayLocationNames(json.data, brasBasahMRT);
-  addMarkers(json.data, brasBasahMRT);
+  clearFilterOptions();
+  displayLocationNames(locationData.data, brasBasahMRT);
+  addMarkers(locationData.data, brasBasahMRT);
 }
 
 // Add location markers to the map
-function addMarkers(locationData, mrtCoordinates) {
+function addMarkers(locationData) {
   // Remove previous markers from the map
   clearMarkers();
   // Track the currently open info window
@@ -108,7 +103,7 @@ function addMarkers(locationData, mrtCoordinates) {
       animation: google.maps.Animation.DROP,
     };
 
-    // Code to show marker
+    // Code to show marker on map
     const marker = new google.maps.Marker(markerOptions);
     // Extend the bounds to include the marker's position
     bounds.extend(marker.getPosition());
@@ -148,13 +143,14 @@ function addMarkers(locationData, mrtCoordinates) {
 
 // Display location names and content
 function displayLocationNames(locationData, mrtCoordinates) {
-  const locationNamesContainer = document.getElementById("location-names");
-  locationNamesContainer.innerHTML = ""; // Clear previous location names
-
   // Create text to be displayed above the location names
   const locationText = document.getElementById("location-text");
   locationText.innerHTML =
-    '<p>Click <span class="show-food-options-text"> More Food >> </span>  for food options in each location </p>';
+    '<p>Click the icon below "<span class="show-food-options-text"> More Food >> </span>" for food options in each location </p>';
+
+  // Get the container for location names and clear previous content
+  const locationNamesContainer = document.getElementById("location-names");
+  locationNamesContainer.innerHTML = "";
 
   // Create a flex container for location cards
   const locationCardsContainer = document.createElement("div");
@@ -212,6 +208,7 @@ function displayLocationNames(locationData, mrtCoordinates) {
         behavior: "smooth",
       });
     });
+    // Add the card to the container
     locationCardsContainer.appendChild(card);
   });
 
@@ -253,9 +250,9 @@ async function showFoodOptions(location_name) {
     <select id="establishment-type-filter" class="form-select">
       <option value="ALL">All Types</option>
       <option value="RESTAURANT">Restaurant</option>
-      <option value="HAWKER STALL">Hawker</option>
       <option value="CAFE">Cafe</option>
       <option value="BAR">Bar</option>
+      <option value="HAWKER STALL">Hawker</option>
       <option value="EATERY">Eatery</option>
       <option value="TAKEAWAY">Takeaway</option>
     </select>
@@ -372,7 +369,7 @@ function getRandomFoodOption(result) {
     const randomFoodOption = filteredData[randomIndex];
     displayRandomFoodOption(randomFoodOption);
   } else {
-    alert("No food options available.");
+    alert("Sorry, food options for this location not added yet!");
   }
 }
 
@@ -389,6 +386,12 @@ function displayRandomFoodOption(foodOption) {
 function clearFoodOptions() {
   const foodOptionsDiv = document.getElementById("food-options");
   foodOptionsDiv.innerHTML = "";
+}
+
+// Function to clear filter options
+function clearFilterOptions() {
+  const filterOptions = document.getElementById("filter-list");
+  filterOptions.innerHTML = "";
 }
 
 // Function to clear markers from the map
