@@ -316,6 +316,7 @@ function createCard(foodOption) {
   <p><strong>Type:</strong> ${foodOption.establishment_type}</p>
   <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
   <p><strong>Stall No.:</strong> ${foodOption.stall_no}</p>
+  <p><strong>Group Size:</strong> ${foodOption.group_size}</p>
   </div>
   `;
   return card;
