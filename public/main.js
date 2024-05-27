@@ -1,8 +1,8 @@
 var map;
 let markers = [];
 let newMarker;
-// const API_URL = "http://127.0.0.1:3000";
-const API_URL = "https://sgeatwhere.onrender.com";
+const API_URL = "http://127.0.0.1:3000";
+// const API_URL = "https://sgeatwhere.onrender.com";
 
 // let declares a block-scoped variable, which means it's only accessible within the block in which it's defined.
 // newMarker is intended to be used within the initMap and addMarker functions. Using let ensures that it's scoped to these functions and not accessible outside of them.
@@ -10,7 +10,7 @@ const API_URL = "https://sgeatwhere.onrender.com";
 //  Coordinates for MRT stations
 const buonaVistaMRT = { lat: 1.3074177591198148, lng: 103.78984059533414 };
 const clementiMRT = { lat: 1.3157320708493883, lng: 103.7650341376623 };
-const queenstownMRT = { lat: 1.2949046236465185, lng: 103.80583738778117 };
+const cityHallMRT = { lat: 1.29331196963223, lng: 103.85212131400863 };
 const brasBasahMRT = { lat: 1.2977384060268324, lng: 103.85050163878333 };
 
 // Initialize the Google Map
@@ -58,8 +58,8 @@ async function ClementiLocations() {
   addMarkers(locationData.data, clementiMRT);
 }
 
-async function QueenstownLocations() {
-  const response = await fetch(API_URL + "/getQueenstownLocations", {
+async function CityHallLocations() {
+  const response = await fetch(API_URL + "/getCityHallLocations", {
     method: "GET",
   });
   const locationData = await response.json();
@@ -67,8 +67,8 @@ async function QueenstownLocations() {
   // console.log(locationData.data);
   clearFoodOptions();
   clearFilterOptions();
-  displayLocationNames(locationData.data, queenstownMRT);
-  addMarkers(locationData.data, queenstownMRT);
+  displayLocationNames(locationData.data, cityHallMRT);
+  addMarkers(locationData.data, cityHallMRT);
 }
 
 async function BrasBasahLocations() {

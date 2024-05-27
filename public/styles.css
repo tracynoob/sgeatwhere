@@ -40,6 +40,21 @@ header img {
 .green-line:hover {
   background-color: #45a049; /* Darker Green */
 }
+
+.green-red-button {
+  background: linear-gradient(to right, #4caf50 50%, #d42e12 50%);
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.green-red-button:hover {
+  background-color: black;
+}
+
 .circle-line {
   background-color: #faab18; /* Orange */
   color: white;

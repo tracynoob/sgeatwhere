@@ -56,17 +56,17 @@ app.get("/getClementiLocations", async (req, res) => {
   res.send({ data: Locationdata });
 });
 
-app.get("/getQueenstownLocations", async (req, res) => {
+app.get("/getCityHallLocations", async (req, res) => {
   const { data: Locationdata, error } = await supabase
     .from("Locations")
     .select()
-    .eq("mrt_station", "QUEENSTOWN");
+    .eq("mrt_station", "CITY HALL");
   // console.log(Locationdata);
   for (let data of Locationdata) {
     // means for each data in the defined variable "Locationdata", do xx
     const { data: imgData } = supabase.storage
       .from("locationimage")
-      .getPublicUrl("QueenstownImage/" + data.location_name + ".jpg");
+      .getPublicUrl("CityHallImage/" + data.location_name + ".jpg");
     data.imgURL = imgData.publicUrl;
   }
   res.send({ data: Locationdata });
