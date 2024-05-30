@@ -311,14 +311,25 @@ function createCard(foodOption) {
   card.innerHTML = `
 
   <div class="food-option-card-header">
-  <h6>${foodOption.food_name}</h6>
+  <h6> ${foodOption.food_name} </h6>
+  </div>
+
+  <div class="food-option-card-type">
+  ${foodOption.establishment_type}
+  </div>
+
+  <div class="food-option-card-cuisine">
+  ${foodOption.cuisine}
   </div>
 
   <div class="food-option-card-body">
-  <p><strong>Type:</strong> ${foodOption.establishment_type}</p>
-  <p><strong>Cuisine:</strong> ${foodOption.cuisine}</p>
-  <p><strong>Stall No.:</strong> ${foodOption.stall_no}</p>
-  <p><strong>Group Size:</strong> ${foodOption.group_size}</p>
+  <p> 📍: ${foodOption.stall_no} </p>
+  <p> 👫🏻: ${foodOption.group_size} </p>
+  <p> 🌐: ${
+    foodOption.website
+      ? `<a href="${foodOption.website}" target="_blank">${foodOption.food_name}</a>`
+      : "null"
+  } </p>
   </div>
   `;
   return card;
