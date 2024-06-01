@@ -23,6 +23,45 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "public")));
 
+// Github sign-in
+app.get("/auth/callback", async function (req, res) {
+  const code = req.query.code;
+  const next = req.query.next ?? "/";
+
+  if (code) {
+    const supabase = createClient({ req, res });
+    await supabase.auth.exchangeCodeForSession(code);
+    console.log(code);
+  }
+
+  res.redirect(303, `/${next.slice(1)}`);
+});
+
+// A route to sign in with GitHub
+app.get("/auth/signin", (req, res) => {
+  const provider = req.query.provider;
+  const { data, error } = supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: "https://ytwuhfytciwrngjtbqhh.supabase.co/auth/v1/callback",
+    },
+  });
+  console.log(data);
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+});
+
+// A route to sign out
+app.get("/auth/signout", async (req, res) => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+});
+
 // call supabase Locations table
 app.get("/getBuonaVistaLocations", async (req, res) => {
   const { data: Locationdata, error } = await supabase

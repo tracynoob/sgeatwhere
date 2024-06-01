@@ -13,6 +13,43 @@ const clementiMRT = { lat: 1.3157320708493883, lng: 103.7650341376623 };
 const cityHallMRT = { lat: 1.29331196963223, lng: 103.85212131400863 };
 const brasBasahMRT = { lat: 1.2977384060268324, lng: 103.85050163878333 };
 
+// Sign in function
+document.getElementById("signin-button").addEventListener("click", () => {
+  window.location.href = `${API_URL}/auth/signin?provider=github`;
+});
+
+document
+  .getElementById("signout-button")
+  .addEventListener("click", async () => {
+    await fetch(`${API_URL}/auth/signout`);
+    handleUser(null);
+  });
+
+window.addEventListener("load", async () => {
+  const response = await fetch(`${API_URL}/auth/status`);
+  const user = await response.json();
+  handleUser(user);
+});
+
+function handleUser(user) {
+  const signInButton = document.getElementById("signin-button");
+  const signOutButton = document.getElementById("signout-button");
+  const userInfo = document.getElementById("user-info");
+  const userEmail = document.getElementById("user-email");
+
+  if (user) {
+    signInButton.style.display = "none";
+    signOutButton.style.display = "block";
+    userInfo.style.display = "block";
+    userEmail.textContent = user.email;
+  } else {
+    signInButton.style.display = "block";
+    signOutButton.style.display = "none";
+    userInfo.style.display = "none";
+    userEmail.textContent = "";
+  }
+}
+
 // Initialize the Google Map
 function initMap() {
   // Code for Singapore lat lng
