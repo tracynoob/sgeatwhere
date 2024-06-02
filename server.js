@@ -15,45 +15,47 @@ const path = require("path");
 // };
 
 app.use(cors()); // Use the cors middleware with your options
+app.use(express.json());
+app.use("/", express.static(path.join(__dirname, "public")));
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-app.use(express.json());
-app.use("/", express.static(path.join(__dirname, "public")));
-
 // Github sign-in
+app.get("/auth/signin", (req, res) => {
+  const provider = req.query.provider;
+  const { data, error } = supabase.auth.signInWithOAuth({
+    provider: provider,
+  });
+
+  if (error) {
+    console.error("Error during sign-in:", error);
+  } else {
+    return res.redirect(data.url);
+  }
+});
+
+// Github callback
 app.get("/auth/callback", async function (req, res) {
   const code = req.query.code;
   const next = req.query.next ?? "/";
 
   if (code) {
-    const supabase = createClient({ req, res });
-    await supabase.auth.exchangeCodeForSession(code);
-    console.log(code);
+    try {
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+      if (error) throw error;
+      console.log("Session exchanged successfully:", data);
+    } catch (error) {
+      console.error("Error exchanging code for session:", error);
+      return res.status(500).send("Error during authentication");
+    }
   }
 
   res.redirect(303, `/${next.slice(1)}`);
 });
 
-// A route to sign in with GitHub
-app.get("/auth/signin", (req, res) => {
-  const provider = req.query.provider;
-  const { data, error } = supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: "https://ytwuhfytciwrngjtbqhh.supabase.co/auth/v1/callback",
-    },
-  });
-  console.log(data);
-
-  if (error) {
-    return res.status(400).json({ error: error.message });
-  }
-});
-
-// A route to sign out
+// Github sign out
 app.get("/auth/signout", async (req, res) => {
   const { error } = await supabase.auth.signOut();
 
