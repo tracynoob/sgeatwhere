@@ -28,7 +28,7 @@ app.get("/auth/signin", (req, res) => {
   const { data, error } = supabase.auth.signInWithOAuth({
     provider: provider,
     options: {
-      redirecTo: "https://www.sgeatwhere.com",
+      redirecTo: "https://www.sgeatwhere.com", // redirectTo landing page
     },
   });
 
