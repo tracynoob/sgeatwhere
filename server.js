@@ -26,16 +26,19 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.get("/auth/signin", (req, res) => {
   const provider = req.query.provider;
   const { data, error } = supabase.auth.signInWithOAuth({
-    provider: provider,
+    provider: "github",
     options: {
-      redirectTo: "https://sgeatwhere.onrender.com/auth/callback", // redirectTo landing page
+      redirectTo: "https://sgeatwhere.onrender.com//auth/callback", // redirectTo landing page
     },
   });
 
   if (error) {
     console.error("Error during sign-in:", error);
+  }
+  if (data.url) {
+    res.redirect(data.url);
   } else {
-    return res.redirect(data.url);
+    res.status(500).send("Error Obtainting OAuth URL");
   }
 });
 
