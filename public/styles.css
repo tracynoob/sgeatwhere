@@ -6,10 +6,13 @@ body {
 
 /* Apply styles to the <header> element */
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #6199ad;
   color: #fefbf6;
-  padding: 15px;
-  text-align: center;
+  padding: 10px 20px;
+  position: relative;
 }
 
 /* Style the heading inside the header */
@@ -26,6 +29,12 @@ header p {
 header img {
   max-width: 200px;
   height: auto;
+}
+
+.auth {
+  position: absolute;
+  top: 10px;
+  right: 20px;
 }
 
 .green-line {

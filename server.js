@@ -9,12 +9,18 @@ const port = 3000;
 const path = require("path");
 
 // // Define the CORS options
-// const corsOptions = {
-//   credentials: true,
-//   origin: ["http://localhost:5501", "http://localhost:80"], // Whitelist the domains you want to allow
-// };
+const corsOptions = {
+  credentials: true,
+  origin: [
+    "http://127.0.0.1:5501",
+    "http://127.0.0.1:3000",
+    "https://github.com/*",
+    "https://ytwuhfytciwrngjtbqhh.supabase.co/*",
+  ], // Whitelist the domains you want to allow
+};
+app.use(cors(corsOptions));
 
-app.use(cors()); // Use the cors middleware with your options
+// app.use(cors()); // Enable all CORS requests
 app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "public")));
 
@@ -24,51 +30,42 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Github sign-in
 app.get("/auth/signin", (req, res) => {
-  const provider = req.query.provider;
-  const { data, error } = supabase.auth.signInWithOAuth({
-    provider: "github",
-    options: {
-      redirectTo: "https://sgeatwhere.onrender.com/auth/callback", // redirectTo landing page
-    },
-  });
-
-  if (error) {
-    console.error("Error during sign-in:", error);
-  }
-  if (data.url) {
-    res.redirect(data.url);
-  } else {
-    res.status(500).send("Error Obtainting OAuth URL");
-  }
-});
-
-// Github callback
-app.get("/auth/callback", async function (req, res) {
-  const code = req.query.code;
-  const next = req.query.next ?? "/";
-
-  if (code) {
-    try {
-      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-      if (error) throw error;
-      console.log("Session exchanged successfully:", data);
-    } catch (error) {
-      console.error("Error exchanging code for session:", error);
-      return res.status(500).send("Error during authentication");
+  function handleData(data) {
+    console.log("📊", data);
+    if (data.data.url) {
+      res.redirect(data.data.url);
+    } else {
+      res.status(500).send("Error Obtainting OAuth URL");
     }
   }
 
-  res.redirect(303, `/${next.slice(1)}`);
-});
-
-// Github sign out
-app.get("/auth/signout", async (req, res) => {
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    return res.status(400).json({ error: error.message });
+  function handleError(error) {
+    console.log("❌", error);
+    console.error("Error during sign-in:", error);
   }
+
+  const { data, error } = supabase.auth
+    .signInWithOAuth({
+      provider: "github",
+      options: {
+        emailRedirectTo: "http://localhost:3000",
+      },
+    })
+    .then(handleData, handleError);
 });
+
+// Github callback
+// app.get("/auth/callback", async function (req, res) {
+//   const code = req.query.code;
+//   const next = req.query.next ?? "/";
+
+//   if (code) {
+//     const supabase = createClient({ req, res });
+//     await supabase.auth.exchangeCodeForSession(code);
+//   }
+
+//   res.redirect(303, `/${next.slice(1)}`);
+// });
 
 // call supabase Locations table
 app.get("/getBuonaVistaLocations", async (req, res) => {
