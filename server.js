@@ -26,14 +26,16 @@ app.use("/", express.static(path.join(__dirname, "public")));
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: { flowType: "pkce" },
+});
 
-// Github sign-in
+// Github sign-in => retrive callback url from supabase
 app.get("/auth/signin", (req, res) => {
   function handleData(data) {
     console.log("📊", data);
     if (data.data.url) {
-      res.redirect(data.data.url);
+      res.redirect(data.data.url); //redirect frontend to go to callback url,
     } else {
       res.status(500).send("Error Obtainting OAuth URL");
     }
@@ -48,24 +50,23 @@ app.get("/auth/signin", (req, res) => {
     .signInWithOAuth({
       provider: "github",
       options: {
-        emailRedirectTo: "http://localhost:3000",
+        redirectTo: "http://localhost:3000/auth/callback",
       },
     })
     .then(handleData, handleError);
 });
 
 // Github callback
-// app.get("/auth/callback", async function (req, res) {
-//   const code = req.query.code;
-//   const next = req.query.next ?? "/";
+app.get("/auth/callback", async function (req, res) {
+  const code = req.query.code;
+  const next = req.query.next ?? "/";
 
-//   if (code) {
-//     const supabase = createClient({ req, res });
-//     await supabase.auth.exchangeCodeForSession(code);
-//   }
-
-//   res.redirect(303, `/${next.slice(1)}`);
-// });
+  if (code) {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    console.log(data);
+  }
+  res.redirect(302, "http://127.0.0.1:5501/public/index.html");
+});
 
 // call supabase Locations table
 app.get("/getBuonaVistaLocations", async (req, res) => {
