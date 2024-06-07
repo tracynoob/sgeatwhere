@@ -16,11 +16,12 @@ const corsOptions = {
     "http://127.0.0.1:3000",
     "https://github.com/*",
     "https://ytwuhfytciwrngjtbqhh.supabase.co/*",
+    "https://sgeatwhere.com",
   ], // Whitelist the domains you want to allow
 };
 app.use(cors(corsOptions));
-
 // app.use(cors()); // Enable all CORS requests
+
 app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "public")));
 
@@ -30,30 +31,35 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: { flowType: "pkce" },
 });
 
-// Github sign-in => retrive callback url from supabase
-app.get("/auth/signin", (req, res) => {
-  function handleData(data) {
-    console.log("📊", data);
-    if (data.data.url) {
-      res.redirect(data.data.url); //redirect frontend to go to callback url,
-    } else {
-      res.status(500).send("Error Obtainting OAuth URL");
-    }
-  }
+// Github sign-in: retrive callback url from supabase
+app.get("/auth/signin", async (req, res) => {
+  const provider = req.query.provider;
+  // function handleData(data) {
+  //   console.log("📊", data);
+  //   if (data.data.url) {
+  //     res.redirect(data.data.url);
+  //   } else {
+  //     res.status(500).send("Error Obtainting OAuth URL");
+  //   }
+  // }
 
-  function handleError(error) {
-    console.log("❌", error);
+  // function handleError(error) {
+  //   console.log("❌", error);
+  //   console.error("Error during sign-in:", error);
+  // }
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      // redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo: "https://sgeatwhere.com/auth/callback",
+    },
+  });
+  // .then(handleData, handleError);
+  if (error) {
     console.error("Error during sign-in:", error);
+  } else {
+    return res.redirect(data.url); //redirect frontend to go to callback url,
   }
-
-  const { data, error } = supabase.auth
-    .signInWithOAuth({
-      provider: "github",
-      options: {
-        redirectTo: "http://localhost:3000/auth/callback",
-      },
-    })
-    .then(handleData, handleError);
 });
 
 // Github callback
@@ -65,7 +71,16 @@ app.get("/auth/callback", async function (req, res) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     console.log(data);
   }
-  res.redirect(302, "http://127.0.0.1:5501/public/index.html");
+  // res.redirect(302, "http://127.0.0.1:5501/public/index.html");
+  res.redirect(302, "https://sgeatwhere.com");
+});
+
+// Github sign out
+app.get("/auth/signout", async (req, res) => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
 });
 
 // call supabase Locations table
